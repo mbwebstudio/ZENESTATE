@@ -42,6 +42,48 @@ svg.i{width:20px;height:20px;flex:none}
 .rows{display:grid;gap:16px;align-content:start}
 .row{display:flex;gap:12px;align-items:flex-start}
 .row a{font-weight:700}
+.logo-img{height:46px;width:auto;display:block;max-width:180px;object-fit:contain}
+.logo-img.on-dark{background:#fff;padding:5px 9px;border-radius:6px}
+.lt aside .logo-img{height:auto;width:150px;max-width:100%}
+@media(max-width:1000px){.lt aside .logo-img{height:40px;width:auto}}
+img.photo{display:block;width:100%;object-fit:cover}
+.gal h2{font-size:clamp(2rem,4.2vw,2.9rem);margin-bottom:28px}
+.gal-grid img{display:block;width:100%;object-fit:cover}
+/* editorial: full-bleed band photo, square tiles */
+.ed-band:has(.photo){padding:0;background:none}
+.ed-band .photo{height:min(68vh,640px)}
+.ed .gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ed .gal-grid img{aspect-ratio:1/1}
+/* tarjetas: photo fills the rounded card, rounded tiles */
+.tj-artcard:has(.photo){padding:0;overflow:hidden}
+.tj-artcard .photo{height:100%;aspect-ratio:1/1}
+.tj .gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:16px}
+.tj .gal-grid img{aspect-ratio:4/3;border-radius:calc(var(--r) + 4px);border:1px solid var(--line)}
+/* lateral: tall portrait photo, two-column tiles */
+.lt-hero .photo{aspect-ratio:4/5;border-radius:var(--r)}
+.lt .gal{padding-left:clamp(20px,5vw,72px);padding-right:clamp(20px,5vw,72px)}
+.lt .gal .wrap{padding:0;margin:0;max-width:900px}
+.lt .gal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lt .gal-grid img{aspect-ratio:3/2;border-radius:var(--r)}
+/* bloques: photo inside the circle, scrolling strip */
+.bq-circle:has(.photo){padding:0;overflow:hidden}
+.bq-circle .photo{height:100%;aspect-ratio:1/1}
+.bq .gal{background:var(--ink);color:var(--bg)}
+.bq .gal-grid{display:grid;grid-auto-flow:column;grid-auto-columns:min(420px,80%);gap:0;overflow-x:auto;scroll-snap-type:x mandatory}
+.bq .gal-grid img{height:340px;scroll-snap-align:start}
+/* minimal: wide photo above the title, quiet two-up grid */
+.mn-hero .photo{aspect-ratio:16/9;border-radius:var(--r);margin-bottom:40px}
+.mn .gal{padding:64px 0;border-top:1px solid var(--line)}
+.mn .gal .wrap{padding:0}
+.mn .gal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mn .gal-grid img{aspect-ratio:4/3;border-radius:var(--r)}
+/* revista: framed photo, feature tile plus smaller ones */
+.rv-frame:has(.photo){padding:10px}
+.rv-frame .photo{aspect-ratio:4/5}
+.rv .gal-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:220px;gap:14px}
+.rv .gal-grid img{height:100%;border:2px solid var(--ink)}
+.rv .gal-grid img:first-child{grid-column:span 2;grid-row:span 2}
+@media(max-width:700px){.ed .gal-grid,.rv .gal-grid{grid-template-columns:1fr 1fr}.rv .gal-grid{grid-auto-rows:160px}.lt .gal-grid,.mn .gal-grid{grid-template-columns:1fr}}
 .float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:50;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;box-shadow:0 10px 24px -8px rgba(0,0,0,.45)}
 .float svg{width:28px;height:28px}
 .ft{padding:30px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
@@ -100,7 +142,7 @@ svg.i{width:20px;height:20px;flex:none}
 </head>
 <body>
 <div class="ed">
-<header class="ed-top"><div class="wrap"><a class="logo" href="#"><svg class="mark" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="8" fill="var(--accent)"/><path d="M7 17 17 9l10 8M10 15v10h14V15" fill="none" stroke="var(--accent-ink)" stroke-width="2.4" stroke-linejoin="round"/><rect x="15" y="19" width="4" height="6" fill="var(--accent-ink)"/></svg><span>ZENESTATE</span></a><nav aria-label="Principal"><ul><li><a href="#servicios">Servicios</a></li><li><a href="#lugar">El lugar</a></li><li><a href="#opiniones">Opiniones</a></li><li><a href="#contacto">Contacto</a></li></ul></nav></div></header>
+<header class="ed-top"><div class="wrap"><a class="logo" href="#"><svg class="mark" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="8" fill="var(--accent)"/><path d="M7 17 17 9l10 8M10 15v10h14V15" fill="none" stroke="var(--accent-ink)" stroke-width="2.4" stroke-linejoin="round"/><rect x="15" y="19" width="4" height="6" fill="var(--accent-ink)"/></svg><span>ZENESTATE</span></a><nav aria-label="Principal"><ul><li><a href="#servicios">Servicios</a></li><li><a href="#fotos">Fotos</a></li><li><a href="#lugar">El lugar</a></li><li><a href="#opiniones">Opiniones</a></li><li><a href="#contacto">Contacto</a></li></ul></nav></div></header>
 <main>
 <section class="ed-hero" style="padding-bottom:0"><div class="wrap">
   <p class="kicker">Punta del Este</p>
@@ -109,11 +151,15 @@ svg.i{width:20px;height:20px;flex:none}
   <div class="cta"><a class="btn btn-main" href="tel:+59842488547"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span>Llamar</span></a><a class="btn btn-ghost" href="#contacto"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Cómo llegar</a></div>
   <p class="rating"><span class="stars" aria-hidden="true">★★★★★</span> <span><b>4,5</b> en Google · 53 reseñas</span></p>
 </div>
-<div class="ed-band"><div class="art" aria-hidden="true"><svg viewBox="0 0 220 200"><rect x="6" y="6" width="208" height="188" rx="16" fill="var(--soft)"/><rect x="30" y="34" width="160" height="132" fill="var(--surface)" stroke="var(--ink)" stroke-width="5"/><path d="M110 34v58M30 92h50M100 92h90M140 92v74M30 130h40" stroke="var(--ink)" stroke-width="4"/><path d="M80 92a20 20 0 0 1 20-20" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-dasharray="4 4"/><rect x="150" y="104" width="30" height="22" rx="3" fill="var(--accent)" opacity=".35"/><path d="M164 18c-14 0-24 10-24 23 0 18 24 39 24 39s24-21 24-39c0-13-10-23-24-23z" fill="var(--accent)" stroke="var(--ink)" stroke-width="4"/><circle cx="164" cy="41" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/></svg></div></div>
+<div class="ed-band"><img class="photo" src="fotos/01.jpg" alt="ZENESTATE"></div>
 </section>
 <section id="servicios"><div class="wrap">
   <h2>Encontrá tu propiedad</h2><p class="sub">Te ayudamos a buscar, comparar y decidir.</p>
   <ol class="ed-list"><li><h3>Alquileres de temporada</h3><p>Apartamentos y casas para el verano, en todas las zonas de Punta.</p></li><li><h3>Alquileres anuales</h3><p>Opciones para vivir todo el año en Punta del Este.</p></li><li><h3>Compra y venta</h3><p>Asesoramiento para comprar o vender tu propiedad.</p></li><li><h3>Búsqueda a medida</h3><p>Contanos qué buscás y te mandamos opciones que encajen.</p></li></ol>
+</div></section>
+<section id="fotos" class="gal"><div class="wrap">
+  <h2>Fotos</h2>
+  <div class="gal-grid"><img src="fotos/02.jpg" alt="ZENESTATE, foto 2" loading="lazy"><img src="fotos/03.jpg" alt="ZENESTATE, foto 3" loading="lazy"><img src="fotos/04.jpg" alt="ZENESTATE, foto 4" loading="lazy"><img src="fotos/05.jpg" alt="ZENESTATE, foto 5" loading="lazy"></div>
 </div></section>
 <section id="lugar" class="ed-place"><div class="wrap">
   <div class="cols"><h2>Atención que se nota</h2><div><p>Quienes nos eligieron destacan lo mismo: buena predisposición, respuestas claras y una búsqueda eficiente.</p><p>Estamos en Covadonga esquina Montevideo, abiertos de lunes a sábado hasta las 21 h.</p></div></div>
